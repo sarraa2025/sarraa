@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم المشرف - سرَّاء للتجميل والعناية</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <script>
+        // Admin Access Control
+        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        if (!currentUser || !currentUser.isAdmin) {
+            alert("غير مصرح لك بالوصول إلى هذه الصفحة. يرجى تسجيل الدخول كمسؤول.");
+            window.location.href = "login.html";
+        }
+    </script>
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+             <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <img src="images/logo.png" alt="سرَّاء" class="logo">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">الرئيسية</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="categories.html">الفئات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="products.html">المنتجات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">من نحن</a>
+                        </li>
+                        <!-- Admin link is added dynamically by auth.js -->
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <div class="cart-icon position-relative me-3">
+                            <a href="cart.html" class="text-decoration-none text-dark">
+                                <i class="fas fa-shopping-cart fs-5"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary cart-count" style="font-size: 0.7em;">0</span>
+                            </a>
+                        </div>
+                        <div class="auth-links">
+                             <!-- Auth links populated by auth.js -->
+                             <a href="login.html" class="btn btn-outline-primary me-2">تسجيل الدخول</a>
+                             <a href="register.html" class="btn btn-primary">إنشاء حساب</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Admin Dashboard Content -->
+    <section class="py-5">
+        <div class="container">
+            <h1 class="section-title text-center mb-5">لوحة تحكم المشرف</h1>
+            
+            <!-- Dashboard Stats -->
+            <div class="row g-4 mb-5">
+                <div class="col-md-6 col-lg-3">
+                    <div class="card dashboard-card primary h-100 shadow-sm border-0">
+                         <div class="card-body text-center">
+                            <div class="icon mb-3">
+                                <i class="fas fa-box fa-3x"></i>
+                            </div>
+                            <h5 class="card-title">المنتجات</h5>
+                            <h2 class="display-5 fw-bold product-count">0</h2>
+                            <a href="admin-products.html" class="stretched-link"></a>
+                         </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3">
+                     <div class="card dashboard-card secondary h-100 shadow-sm border-0">
+                         <div class="card-body text-center">
+                            <div class="icon mb-3">
+                                <i class="fas fa-shopping-bag fa-3x"></i>
+                            </div>
+                            <h5 class="card-title">الطلبات</h5>
+                            <h2 class="display-5 fw-bold order-count">0</h2>
+                            <a href="admin-orders.html" class="stretched-link"></a>
+                         </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3">
+                     <div class="card dashboard-card success h-100 shadow-sm border-0">
+                         <div class="card-body text-center">
+                            <div class="icon mb-3">
+                                <i class="fas fa-users fa-3x"></i>
+                            </div>
+                            <h5 class="card-title">المستخدمين</h5>
+                            <h2 class="display-5 fw-bold user-count">0</h2>
+                             <a href="admin-users.html" class="stretched-link"></a>
+                         </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3">
+                     <div class="card dashboard-card info h-100 shadow-sm border-0">
+                         <div class="card-body text-center">
+                            <div class="icon mb-3">
+                                <i class="fas fa-tags fa-3x"></i>
+                            </div>
+                            <h5 class="card-title">الفئات</h5>
+                            <h2 class="display-5 fw-bold category-count">0</h2>
+                            <a href="admin-categories.html" class="stretched-link"></a>
+                         </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Admin Navigation Links -->
+            <div class="row mb-5">
+                <div class="col-12">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                             <h4 class="mb-4">إدارة الموقع</h4>
+                            <div class="row g-4 text-center">
+                                <div class="col-sm-6 col-md-4 col-lg-3">
+                                    <a href="admin-products.html" class="text-decoration-none d-block">
+                                        <div class="p-3 rounded bg-light hover-shadow">
+                                            <i class="fas fa-box fa-2x mb-2 text-primary"></i>
+                                            <h6>إدارة المنتجات</h6>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-md-4 col-lg-3">
+                                    <a href="admin-categories.html" class="text-decoration-none d-block">
+                                        <div class="p-3 rounded bg-light hover-shadow">
+                                            <i class="fas fa-tags fa-2x mb-2 text-info"></i>
+                                            <h6>إدارة الفئات</h6>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-md-4 col-lg-3">
+                                    <a href="admin-orders.html" class="text-decoration-none d-block">
+                                        <div class="p-3 rounded bg-light hover-shadow">
+                                            <i class="fas fa-shopping-bag fa-2x mb-2 text-secondary"></i>
+                                            <h6>إدارة الطلبات</h6>
+                                        </div>
+                                    </a>
+                                </div>
+                                 <div class="col-sm-6 col-md-4 col-lg-3">
+                                    <a href="admin-users.html" class="text-decoration-none d-block">
+                                        <div class="p-3 rounded bg-light hover-shadow">
+                                            <i class="fas fa-users fa-2x mb-2 text-success"></i>
+                                            <h6>إدارة المستخدمين</h6>
+                                        </div>
+                                    </a>
+                                </div>
+                                 <div class="col-sm-6 col-md-4 col-lg-3">
+                                    <a href="admin-settings.html" class="text-decoration-none d-block">
+                                        <div class="p-3 rounded bg-light hover-shadow">
+                                            <i class="fas fa-cog fa-2x mb-2 text-warning"></i>
+                                            <h6>الإعدادات</h6>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Stats/Reports Placeholder -->
+             <div class="row">
+                <div class="col-12">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-header bg-white py-3">
+                             <h5 class="mb-0">نظرة عامة سريعة</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-muted">سيتم عرض تقارير وإحصائيات سريعة هنا في المستقبل.</p>
+                            <!-- Placeholder for charts or recent activity logs -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-5 mt-5 bg-light">
+         <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5>سرَّاء</h5>
+                    <p>منصة متخصصة في بيع منتجات التجميل والعناية بالبشرة والشعر من أفضل الماركات المحلية والعالمية.</p>
+                    <div class="social-icons d-flex gap-2 mt-3">
+                        <a href="#" class="text-secondary"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-secondary"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-secondary"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5>روابط سريعة</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-decoration-none text-dark">الرئيسية</a></li>
+                        <li><a href="products.html" class="text-decoration-none text-dark">المنتجات</a></li>
+                        <li><a href="categories.html" class="text-decoration-none text-dark">الفئات</a></li>
+                        <li><a href="about.html" class="text-decoration-none text-dark">من نحن</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>تواصل معنا</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-map-marker-alt me-2"></i> القاهرة، مصر</li>
+                        <li><i class="fas fa-phone me-2"></i> +20 123 456 7890</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@sarraa.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center mt-4 border-top pt-4">
+                <p class="mb-0 text-muted">&copy; 2025 سرَّاء لمستحضرات التجميل. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth.js"></script> <!-- Needed for updateNavigation -->
+    <script src="js/cart.js"></script> <!-- Needed for updateCartCount -->
+    <script src="js/dashboard.js"></script> <!-- Specific dashboard logic -->
+    <script>
+        // Update cart count on load
+        document.addEventListener("DOMContentLoaded", function() {
+             if (typeof updateCartCount === "function") {
+                updateCartCount();
+            }
+             // Load dashboard stats (assuming dashboard.js handles this)
+             if (typeof loadDashboardStats === "function") {
+                 loadDashboardStats();
+             }
+        });
+    </script>
+    <script src="js/global-settings.js"></script>
+<script src="js/console_error_fix.js"></script>
+<script src="js/image_fix.js"></script>
+</body>
+</html>
+

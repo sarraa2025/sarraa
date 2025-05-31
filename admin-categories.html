@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة الفئات - لوحة التحكم - سرَّاء للتجميل والعناية</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <script>
+        // Admin Access Control
+        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        if (!currentUser || !currentUser.isAdmin) {
+            alert("غير مصرح لك بالوصول إلى هذه الصفحة. يرجى تسجيل الدخول كمسؤول.");
+            window.location.href = "login.html";
+        }
+    </script>
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <img src="images/logo.png" alt="سرَّاء" class="logo">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">الرئيسية</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="categories.html">الفئات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="products.html">المنتجات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">من نحن</a>
+                        </li>
+                         <!-- Admin link is added dynamically by auth.js -->
+                    </ul>
+                     <div class="d-flex align-items-center">
+                        <div class="cart-icon position-relative me-3">
+                            <a href="cart.html" class="text-decoration-none text-dark">
+                                <i class="fas fa-shopping-cart fs-5"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary cart-count" style="font-size: 0.7em;">0</span>
+                            </a>
+                        </div>
+                        <div class="auth-links">
+                             <!-- Auth links populated by auth.js -->
+                             <a href="login.html" class="btn btn-outline-primary me-2">تسجيل الدخول</a>
+                             <a href="register.html" class="btn btn-primary">إنشاء حساب</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Admin Categories Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <!-- Admin Sidebar -->
+                <div class="col-lg-3 mb-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="mb-4">لوحة التحكم</h5>
+                            
+                            <div class="admin-nav">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="admin-dashboard.html">
+                                            <i class="fas fa-tachometer-alt me-2"></i> الرئيسية
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="admin-products.html">
+                                            <i class="fas fa-box me-2"></i> المنتجات
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="admin-categories.html">
+                                            <i class="fas fa-tags me-2"></i> الفئات
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="admin-orders.html">
+                                            <i class="fas fa-shopping-bag me-2"></i> الطلبات
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="admin-users.html">
+                                            <i class="fas fa-users me-2"></i> المستخدمين
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="admin-settings.html">
+                                            <i class="fas fa-cog me-2"></i> الإعدادات
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Categories Content -->
+                <div class="col-lg-9">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h4 class="mb-0">إدارة الفئات</h4>
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                                    <i class="fas fa-plus me-1"></i> إضافة فئة
+                                </button>
+                            </div>
+                            
+                            <!-- Categories Table -->
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>الصورة</th>
+                                            <th>الاسم</th>
+                                            <th>الوصف</th>
+                                            <th>مميزة</th>
+                                            <th>الإجراءات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="categories-list">
+                                        <!-- Categories will be inserted here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add Category Modal -->
+    <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCategoryModalLabel">إضافة فئة جديدة</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="add-category-form">
+                        <div class="mb-3">
+                            <label for="category-id" class="form-label">معرف الفئة (بالإنجليزية، بدون مسافات)</label>
+                            <input type="text" class="form-control" id="category-id" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="category-name" class="form-label">اسم الفئة</label>
+                            <input type="text" class="form-control" id="category-name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="category-description" class="form-label">الوصف</label>
+                            <textarea class="form-control" id="category-description" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="category-image" class="form-label">رابط الصورة</label>
+                            <input type="text" class="form-control" id="category-image" placeholder="https://example.com/image.jpg">
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="category-featured">
+                            <label class="form-check-label" for="category-featured">فئة مميزة</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="button" class="btn btn-primary" id="save-category">حفظ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Category Modal -->
+    <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editCategoryModalLabel">تعديل الفئة</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="edit-category-form">
+                        <input type="hidden" id="edit-category-id">
+                        <div class="mb-3">
+                            <label for="edit-category-name" class="form-label">اسم الفئة</label>
+                            <input type="text" class="form-control" id="edit-category-name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-category-description" class="form-label">الوصف</label>
+                            <textarea class="form-control" id="edit-category-description" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-category-image" class="form-label">رابط الصورة</label>
+                            <input type="text" class="form-control" id="edit-category-image" placeholder="https://example.com/image.jpg">
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="edit-category-featured">
+                            <label class="form-check-label" for="edit-category-featured">فئة مميزة</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="button" class="btn btn-primary" id="update-category">حفظ التغييرات</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Category Confirmation Modal -->
+    <div class="modal fade" id="deleteCategoryModal" tabindex="-1" aria-labelledby="deleteCategoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteCategoryModalLabel">تأكيد الحذف</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>هل أنت متأكد من حذف الفئة <span id="delete-category-name" class="fw-bold"></span>؟</p>
+                    <p class="text-danger">هذا الإجراء لا يمكن التراجع عنه. سيتم حذف جميع المنتجات المرتبطة بهذه الفئة أيضًا.</p>
+                    <input type="hidden" id="delete-category-id">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="button" class="btn btn-danger" id="confirm-delete-category">حذف</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer py-5 mt-5 bg-light">
+         <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5>سرَّاء</h5>
+                    <p>منصة متخصصة في بيع منتجات التجميل والعناية بالبشرة والشعر من أفضل الماركات المحلية والعالمية.</p>
+                    <div class="social-icons d-flex gap-2 mt-3">
+                        <a href="#" class="text-secondary"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-secondary"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-secondary"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5>روابط سريعة</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-decoration-none text-dark">الرئيسية</a></li>
+                        <li><a href="products.html" class="text-decoration-none text-dark">المنتجات</a></li>
+                        <li><a href="categories.html" class="text-decoration-none text-dark">الفئات</a></li>
+                        <li><a href="about.html" class="text-decoration-none text-dark">من نحن</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>تواصل معنا</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-map-marker-alt me-2"></i> القاهرة، مصر</li>
+                        <li><i class="fas fa-phone me-2"></i> +20 123 456 7890</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@sarraa.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center mt-4 border-top pt-4">
+                <p class="mb-0 text-muted">&copy; 2025 سرَّاء لمستحضرات التجميل. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth.js"></script> <!-- Needed for updateNavigation -->
+    <script src="js/cart.js"></script> <!-- Needed for updateCartCount -->
+    <script src="js/admin-categories.js"></script> <!-- Specific admin categories logic -->
+    <script>
+        // Update cart count and navigation on load
+        document.addEventListener("DOMContentLoaded", function() {
+             if (typeof updateCartCount === "function") {
+                updateCartCount();
+            }
+            if (typeof updateNavigation === "function") {
+                const user = JSON.parse(localStorage.getItem("currentUser"));
+                updateNavigation(user);
+            }
+            // Load categories (assuming admin-categories.js handles this)
+             if (typeof loadAdminCategories === "function") {
+                 loadAdminCategories();
+             }
+        });
+    </script>
+    <script src="js/global-settings.js"></script>
+<script src="js/console_error_fix.js"></script>
+<script src="js/image_fix.js"></script>
+</body>
+</html>
+

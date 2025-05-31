@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة الطلبات - لوحة التحكم - سرَّاء للتجميل والعناية</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <script>
+        // Admin Access Control
+        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        if (!currentUser || !currentUser.isAdmin) {
+            alert("غير مصرح لك بالوصول إلى هذه الصفحة. يرجى تسجيل الدخول كمسؤول.");
+            window.location.href = "login.html";
+        }
+    </script>
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <img src="images/logo.png" alt="سرَّاء" class="logo">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">الرئيسية</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="categories.html">الفئات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="products.html">المنتجات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">من نحن</a>
+                        </li>
+                         <!-- Admin link is added dynamically by auth.js -->
+                    </ul>
+                     <div class="d-flex align-items-center">
+                        <div class="cart-icon position-relative me-3">
+                            <a href="cart.html" class="text-decoration-none text-dark">
+                                <i class="fas fa-shopping-cart fs-5"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary cart-count" style="font-size: 0.7em;">0</span>
+                            </a>
+                        </div>
+                        <div class="auth-links">
+                             <!-- Auth links populated by auth.js -->
+                             <a href="login.html" class="btn btn-outline-primary me-2">تسجيل الدخول</a>
+                             <a href="register.html" class="btn btn-primary">إنشاء حساب</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Admin Orders Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <!-- Admin Sidebar -->
+                <div class="col-lg-3 mb-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="mb-4">لوحة التحكم</h5>
+                            
+                            <div class="admin-nav">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="admin-dashboard.html">
+                                            <i class="fas fa-tachometer-alt me-2"></i> الرئيسية
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="admin-products.html">
+                                            <i class="fas fa-box me-2"></i> المنتجات
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="admin-categories.html">
+                                            <i class="fas fa-tags me-2"></i> الفئات
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="admin-orders.html">
+                                            <i class="fas fa-shopping-bag me-2"></i> الطلبات
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="admin-users.html">
+                                            <i class="fas fa-users me-2"></i> المستخدمين
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="admin-settings.html">
+                                            <i class="fas fa-cog me-2"></i> الإعدادات
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Orders Content -->
+                <div class="col-lg-9">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h4 class="mb-0">إدارة الطلبات</h4>
+                                <div>
+                                    <select class="form-select" id="filter-status">
+                                        <option value="">جميع الحالات</option>
+                                        <option value="pending">قيد المعالجة</option>
+                                        <option value="shipped">تم الشحن</option>
+                                        <option value="delivered">تم التوصيل</option>
+                                        <option value="cancelled">ملغي</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- Orders Table -->
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>رقم الطلب</th>
+                                            <th>العميل</th>
+                                            <th>التاريخ</th>
+                                            <th>المبلغ</th>
+                                            <th>الحالة</th>
+                                            <th>الإجراءات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="orders-list">
+                                        <!-- Orders will be inserted here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <!-- Pagination -->
+                            <nav aria-label="Page navigation" class="mt-4">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">السابق</a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">التالي</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Details Modal -->
+    <div class="modal fade" id="orderDetailsModal" tabindex="-1" aria-labelledby="orderDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="orderDetailsModalLabel">تفاصيل الطلب <span class="order-id"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h6>معلومات العميل</h6>
+                            <p class="mb-1"><strong>الاسم:</strong> <span class="customer-name"></span></p>
+                            <p class="mb-1"><strong>البريد الإلكتروني:</strong> <span class="customer-email"></span></p>
+                            <p class="mb-1"><strong>رقم الهاتف:</strong> <span class="customer-phone"></span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>معلومات الشحن</h6>
+                            <p class="mb-1"><strong>العنوان:</strong> <span class="shipping-address"></span></p>
+                            <p class="mb-1"><strong>المدينة:</strong> <span class="shipping-city"></span></p>
+                            <p class="mb-1"><strong>المحافظة:</strong> <span class="shipping-governorate"></span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h6>معلومات الطلب</h6>
+                            <p class="mb-1"><strong>رقم الطلب:</strong> <span class="order-number"></span></p>
+                            <p class="mb-1"><strong>تاريخ الطلب:</strong> <span class="order-date"></span></p>
+                            <p class="mb-1"><strong>طريقة الدفع:</strong> <span class="payment-method"></span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>حالة الطلب</h6>
+                            <div class="d-flex align-items-center">
+                                <select class="form-select me-2" id="order-status">
+                                    <option value="pending">قيد المعالجة</option>
+                                    <option value="shipped">تم الشحن</option>
+                                    <option value="delivered">تم التوصيل</option>
+                                    <option value="cancelled">ملغي</option>
+                                </select>
+                                <button class="btn btn-primary" id="update-status">تحديث</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h6>منتجات الطلب</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>المنتج</th>
+                                    <th>السعر</th>
+                                    <th>الكمية</th>
+                                    <th>الإجمالي</th>
+                                </tr>
+                            </thead>
+                            <tbody id="order-items">
+                                <!-- Order items will be inserted here -->
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3" class="text-end"><strong>إجمالي المنتجات:</strong></td>
+                                    <td class="order-subtotal"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="text-end"><strong>الشحن:</strong></td>
+                                    <td class="order-shipping"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="text-end"><strong>الإجمالي:</strong></td>
+                                    <td class="order-total"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <h6>ملاحظات الطلب</h6>
+                        <p class="order-notes text-muted"></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+                    <button type="button" class="btn btn-primary" id="print-order">طباعة</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer py-5 mt-5 bg-light">
+         <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5>سرَّاء</h5>
+                    <p>منصة متخصصة في بيع منتجات التجميل والعناية بالبشرة والشعر من أفضل الماركات المحلية والعالمية.</p>
+                    <div class="social-icons d-flex gap-2 mt-3">
+                        <a href="#" class="text-secondary"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-secondary"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-secondary"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5>روابط سريعة</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-decoration-none text-dark">الرئيسية</a></li>
+                        <li><a href="products.html" class="text-decoration-none text-dark">المنتجات</a></li>
+                        <li><a href="categories.html" class="text-decoration-none text-dark">الفئات</a></li>
+                        <li><a href="about.html" class="text-decoration-none text-dark">من نحن</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>تواصل معنا</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-map-marker-alt me-2"></i> القاهرة، مصر</li>
+                        <li><i class="fas fa-phone me-2"></i> +20 123 456 7890</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@sarraa.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center mt-4 border-top pt-4">
+                <p class="mb-0 text-muted">&copy; 2025 سرَّاء لمستحضرات التجميل. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth.js"></script> <!-- Needed for updateNavigation -->
+    <script src="js/cart.js"></script> <!-- Needed for updateCartCount -->
+    <script src="js/admin-orders.js"></script> <!-- Specific admin orders logic -->
+    <script>
+        // Update cart count and navigation on load
+        document.addEventListener("DOMContentLoaded", function() {
+             if (typeof updateCartCount === "function") {
+                updateCartCount();
+            }
+            if (typeof updateNavigation === "function") {
+                const user = JSON.parse(localStorage.getItem("currentUser"));
+                updateNavigation(user);
+            }
+            // Load orders (assuming admin-orders.js handles this)
+             if (typeof loadAdminOrders === "function") {
+                 loadAdminOrders();
+             }
+        });
+    </script>
+    <script src="js/global-settings.js"></script>
+<script src="js/console_error_fix.js"></script>
+<script src="js/image_fix.js"></script>
+</body>
+</html>
+

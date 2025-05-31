@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إصلاح بيانات المنتجات - سرَّاء</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    <style>
+        body {
+            padding: 50px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #d63384;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .btn-primary {
+            background-color: #d63384;
+            border-color: #d63384;
+        }
+        .btn-primary:hover {
+            background-color: #b52b6f;
+            border-color: #b52b6f;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+        .success {
+            background-color: #d1e7dd;
+            color: #0f5132;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #842029;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>إصلاح بيانات المنتجات</h1>
+        <p class="lead text-center">هذه الصفحة تقوم بإصلاح روابط الصور المكسورة في بيانات المنتجات</p>
+        
+        <div class="text-center mt-4">
+            <button id="fixButton" class="btn btn-primary btn-lg">إصلاح بيانات المنتجات</button>
+        </div>
+        
+        <div id="result" class="mt-4"></div>
+        
+        <div class="text-center mt-5">
+            <a href="index.html" class="btn btn-outline-secondary">العودة للصفحة الرئيسية</a>
+        </div>
+    </div>
+
+    <script src="js/product_data_fix.js"></script>
+    <script>
+        document.getElementById('fixButton').addEventListener('click', function() {
+            try {
+                // الحصول على بيانات المنتجات الحالية
+                const products = JSON.parse(localStorage.getItem("products")) || [];
+                
+                // قائمة بأسماء الصور المفقودة التي تحتاج إلى استبدال
+                const missingImages = [
+                    "images/products/brands/beautyblender.jpg",
+                    "images/products/brands/clinique_lipbalm.jpg",
+                    "images/products/brands/morphe_palette.jpg",
+                    "images/products/brands/lavender_shower.jpg",
+                    "images/products/brands/moroccanoil.jpg",
+                    "images/products/brands/olive_soap.jpg"
+                ];
+                
+                // تحديث روابط الصور المكسورة
+                let updatedCount = 0;
+                products.forEach(product => {
+                    if (missingImages.includes(product.image)) {
+                        product.image = "images/product-placeholder.jpg";
+                        updatedCount++;
+                    }
+                });
+                
+                // حفظ البيانات المحدثة
+                localStorage.setItem("products", JSON.stringify(products));
+                
+                const resultDiv = document.getElementById('result');
+                resultDiv.className = 'success';
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = `<strong>تم بنجاح!</strong> تم تصحيح ${updatedCount} من روابط الصور المكسورة في بيانات المنتجات.`;
+                
+                // تعطيل الزر بعد الإصلاح
+                this.disabled = true;
+                this.textContent = 'تم الإصلاح بنجاح';
+                
+            } catch (error) {
+                const resultDiv = document.getElementById('result');
+                resultDiv.className = 'error';
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = `<strong>خطأ!</strong> ${error.message}`;
+            }
+        });
+    </script>
+<script src="js/image_fix.js"></script>
+</body>
+</html>

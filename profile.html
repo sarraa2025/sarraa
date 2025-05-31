@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الملف الشخصي - سرَّاء للتجميل والعناية</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+             <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <img src="images/logo.png" alt="سرَّاء" class="logo">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">الرئيسية</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="categories.html">الفئات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="products.html">المنتجات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">من نحن</a>
+                        </li>
+                        <!-- Admin link will be added here by auth.js if user is admin -->
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <div class="cart-icon position-relative me-3">
+                            <a href="cart.html" class="text-decoration-none text-dark">
+                                <i class="fas fa-shopping-cart fs-5"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary cart-count" style="font-size: 0.7em;">0</span>
+                            </a>
+                        </div>
+                        <div class="auth-links">
+                            <!-- Auth links will be populated by auth.js -->
+                            <a href="login.html" class="btn btn-outline-primary me-2">تسجيل الدخول</a>
+                            <a href="register.html" class="btn btn-primary">إنشاء حساب</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Profile Section -->
+    <section class="py-5">
+        <div class="container">
+            <h1 class="section-title text-center mb-5">الملف الشخصي</h1>
+            
+            <div class="row">
+                <!-- Profile Sidebar -->
+                <div class="col-lg-3 mb-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="text-center mb-4">
+                                <div class="profile-avatar mb-3">
+                                    <i class="fas fa-user-circle fa-5x text-primary"></i>
+                                </div>
+                                <h4 class="user-full-name">اسم المستخدم</h4>
+                                <p class="text-muted user-email">user@example.com</p>
+                            </div>
+                            
+                            <div class="profile-nav">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="profile.html">
+                                            <i class="fas fa-user me-2"></i> الملف الشخصي
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="orders.html">
+                                            <i class="fas fa-shopping-bag me-2"></i> طلباتي
+                                        </a>
+                                    </li>
+                                    <!-- Add links for Addresses, Wishlist, Change Password if implemented -->
+                                    <!-- <li class="nav-item">
+                                        <a class="nav-link" href="addresses.html">
+                                            <i class="fas fa-map-marker-alt me-2"></i> العناوين
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="wishlist.html">
+                                            <i class="fas fa-heart me-2"></i> المفضلة
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="change-password.html">
+                                            <i class="fas fa-lock me-2"></i> تغيير كلمة المرور
+                                        </a>
+                                    </li> -->
+                                    <li class="nav-item">
+                                        <a class="nav-link logout-link" href="#">
+                                            <i class="fas fa-sign-out-alt me-2"></i> تسجيل الخروج
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Profile Content -->
+                <div class="col-lg-9">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <h4 class="mb-4">المعلومات الشخصية</h4>
+                            
+                            <form id="profile-form">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="profile-first-name" class="form-label">الاسم الأول</label>
+                                        <input type="text" class="form-control" id="profile-first-name" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="profile-last-name" class="form-label">الاسم الأخير</label>
+                                        <input type="text" class="form-control" id="profile-last-name" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="profile-email" class="form-label">البريد الإلكتروني</label>
+                                        <input type="email" class="form-control" id="profile-email" readonly disabled>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="profile-phone" class="form-label">رقم الهاتف</label>
+                                        <input type="tel" class="form-control" id="profile-phone">
+                                    </div>
+                                    <!-- Add optional fields like birth date, gender if needed -->
+                                    <!-- <div class="col-12">
+                                        <label for="birth-date" class="form-label">تاريخ الميلاد (اختياري)</label>
+                                        <input type="date" class="form-control" id="birth-date">
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">الجنس (اختياري)</label>
+                                        <div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="gender" id="gender-female" value="female">
+                                                <label class="form-check-label" for="gender-female">أنثى</label>
+                                            </div>
+                                            </div>
+                                    </div> -->
+                                    <div class="col-12 mt-4">
+                                        <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Orders Placeholder -->
+                    <div class="card border-0 shadow-sm mt-4">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h4 class="mb-0">آخر الطلبات</h4>
+                                <a href="orders.html" class="btn btn-sm btn-outline-primary">عرض الكل</a>
+                            </div>
+                            <div id="recent-orders" class="text-center text-muted">
+                                (سيتم عرض الطلبات هنا لاحقاً)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-5 mt-5 bg-light">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5>سرَّاء</h5>
+                    <p>منصة متخصصة في بيع منتجات التجميل والعناية بالبشرة والشعر من أفضل الماركات المحلية والعالمية.</p>
+                    <div class="social-icons d-flex gap-2 mt-3">
+                        <a href="#" class="text-secondary"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-secondary"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-secondary"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5>روابط سريعة</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-decoration-none text-dark">الرئيسية</a></li>
+                        <li><a href="products.html" class="text-decoration-none text-dark">المنتجات</a></li>
+                        <li><a href="categories.html" class="text-decoration-none text-dark">الفئات</a></li>
+                        <li><a href="about.html" class="text-decoration-none text-dark">من نحن</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>تواصل معنا</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-map-marker-alt me-2"></i> القاهرة، مصر</li>
+                        <li><i class="fas fa-phone me-2"></i> +20 123 456 7890</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@sarraa.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center mt-4 border-top pt-4">
+                <p class="mb-0 text-muted">&copy; 2025 سرَّاء لمستحضرات التجميل. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth.js"></script> <!-- Contains updateNavigation, handleLogout -->
+    <script src="js/cart.js"></script> <!-- Contains updateCartCount -->
+    <script src="js/profile.js"></script> <!-- Contains profile page functionality -->
+    <script src="js/global-settings.js"></script> <!-- Load global settings -->
+
+
+
+
+
+
+
+
+
+
+
+
+            } else {
+                alert("تم تحديث الملف الشخصي بنجاح!");
+            }
+        }
+
+    </script>
+<script src="js/console_error_fix.js"></script>
+<script src="js/image_fix.js"></script>
+</body>
+</html>
+

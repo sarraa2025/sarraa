@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إتمام الشراء - سرَّاء للتجميل والعناية</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <img src="images/logo.png" alt="سرَّاء" class="logo">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">الرئيسية</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="categories.html">الفئات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="products.html">المنتجات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">من نحن</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <div class="cart-icon position-relative me-3">
+                            <a href="cart.html" class="active">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary cart-count">0</span>
+                            </a>
+                        </div>
+                        <div class="auth-links">
+                            <a href="login.html" class="btn btn-outline-primary me-2">تسجيل الدخول</a>
+                            <a href="register.html" class="btn btn-primary">إنشاء حساب</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Checkout Section -->
+    <section class="py-5">
+        <div class="container">
+            <h1 class="section-title text-center mb-5">إتمام الشراء</h1>
+            
+            <div class="row">
+                <!-- Checkout Form -->
+                <div class="col-lg-8 mb-4 mb-lg-0">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <form id="checkout-form">
+                                <!-- Shipping Information -->
+                                <h4 class="mb-4">معلومات الشحن</h4>
+                                
+                                <div class="row g-3 mb-4">
+                                    <div class="col-md-6">
+                                        <label for="first-name" class="form-label">الاسم الأول</label>
+                                        <input type="text" class="form-control" id="first-name" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="last-name" class="form-label">الاسم الأخير</label>
+                                        <input type="text" class="form-control" id="last-name" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="email" class="form-label">البريد الإلكتروني</label>
+                                        <input type="email" class="form-control" id="email" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="phone" class="form-label">رقم الهاتف</label>
+                                        <input type="tel" class="form-control" id="phone" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="address" class="form-label">العنوان</label>
+                                        <input type="text" class="form-control" id="address" placeholder="رقم المنزل، اسم الشارع" required>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="city" class="form-label">المدينة</label>
+                                        <input type="text" class="form-control" id="city" required>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="governorate" class="form-label">المحافظة</label>
+                                        <select class="form-select" id="governorate" required>
+                                            <option value="" selected disabled>اختر المحافظة</option>
+                                            <option value="القاهرة">القاهرة</option>
+                                            <option value="الجيزة">الجيزة</option>
+                                            <option value="الإسكندرية">الإسكندرية</option>
+                                            <option value="الدقهلية">الدقهلية</option>
+                                            <option value="البحر الأحمر">البحر الأحمر</option>
+                                            <option value="البحيرة">البحيرة</option>
+                                            <option value="الفيوم">الفيوم</option>
+                                            <option value="الغربية">الغربية</option>
+                                            <option value="الإسماعيلية">الإسماعيلية</option>
+                                            <option value="المنوفية">المنوفية</option>
+                                            <option value="المنيا">المنيا</option>
+                                            <option value="القليوبية">القليوبية</option>
+                                            <option value="الوادي الجديد">الوادي الجديد</option>
+                                            <option value="السويس">السويس</option>
+                                            <option value="أسوان">أسوان</option>
+                                            <option value="أسيوط">أسيوط</option>
+                                            <option value="بني سويف">بني سويف</option>
+                                            <option value="بورسعيد">بورسعيد</option>
+                                            <option value="دمياط">دمياط</option>
+                                            <option value="الشرقية">الشرقية</option>
+                                            <option value="جنوب سيناء">جنوب سيناء</option>
+                                            <option value="كفر الشيخ">كفر الشيخ</option>
+                                            <option value="مطروح">مطروح</option>
+                                            <option value="الأقصر">الأقصر</option>
+                                            <option value="قنا">قنا</option>
+                                            <option value="شمال سيناء">شمال سيناء</option>
+                                            <option value="سوهاج">سوهاج</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="postal-code" class="form-label">الرمز البريدي</label>
+                                        <input type="text" class="form-control" id="postal-code">
+                                    </div>
+                                </div>
+                                
+                                <!-- Payment Information -->
+                                <h4 class="mb-4">معلومات الدفع</h4>
+                                
+                                <div class="mb-4">
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="radio" name="payment-method" id="cash-on-delivery" value="cash" checked>
+                                        <label class="form-check-label" for="cash-on-delivery">
+                                            الدفع عند الاستلام
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="payment-method" id="credit-card" value="card">
+                                        <label class="form-check-label" for="credit-card">
+                                            بطاقة ائتمان
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <!-- Credit Card Details (initially hidden) -->
+                                <div id="card-details" class="row g-3 mb-4 d-none">
+                                    <div class="col-12">
+                                        <label for="card-name" class="form-label">الاسم على البطاقة</label>
+                                        <input type="text" class="form-control" id="card-name">
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="card-number" class="form-label">رقم البطاقة</label>
+                                        <input type="text" class="form-control" id="card-number" placeholder="XXXX XXXX XXXX XXXX">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="expiry-date" class="form-label">تاريخ الانتهاء</label>
+                                        <input type="text" class="form-control" id="expiry-date" placeholder="MM/YY">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="cvv" class="form-label">CVV</label>
+                                        <input type="text" class="form-control" id="cvv" placeholder="XXX">
+                                    </div>
+                                </div>
+                                
+                                <!-- Order Notes -->
+                                <div class="mb-4">
+                                    <label for="order-notes" class="form-label">ملاحظات الطلب (اختياري)</label>
+                                    <textarea class="form-control" id="order-notes" rows="3" placeholder="أي تعليمات خاصة بالتوصيل أو ملاحظات أخرى"></textarea>
+                                </div>
+                                
+                                <div class="form-check mb-4">
+                                    <input class="form-check-input" type="checkbox" id="terms-agree" required>
+                                    <label class="form-check-label" for="terms-agree">
+                                        أوافق على <a href="#">الشروط والأحكام</a> و <a href="#">سياسة الخصوصية</a>
+                                    </label>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary btn-lg w-100">إتمام الطلب</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Order Summary -->
+                <div class="col-lg-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <h4 class="mb-4">ملخص الطلب</h4>
+                            
+                            <div class="order-summary">
+                                <!-- Order Items -->
+                                <div class="order-items mb-4">
+                                    <div class="order-item d-flex justify-content-between align-items-center mb-2">
+                                        <div>
+                                            <span class="fw-bold">كريم مرطب للبشرة الجافة</span>
+                                            <div class="text-muted small">1 × 120 ج.م</div>
+                                        </div>
+                                        <span>120 ج.م</span>
+                                    </div>
+                                    <div class="order-item d-flex justify-content-between align-items-center mb-2">
+                                        <div>
+                                            <span class="fw-bold">سيروم فيتامين سي للوجه</span>
+                                            <div class="text-muted small">1 × 180 ج.م</div>
+                                        </div>
+                                        <span>180 ج.م</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Order Totals -->
+                                <div class="order-totals">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>إجمالي المنتجات</span>
+                                        <span class="fw-bold cart-subtotal">300 ج.م</span>
+                                    </div>
+                                    
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>الشحن</span>
+                                        <span class="fw-bold cart-shipping">50 ج.م</span>
+                                    </div>
+                                    
+                                    <hr>
+                                    
+                                    <div class="d-flex justify-content-between mb-0">
+                                        <span class="fw-bold">الإجمالي</span>
+                                        <span class="fw-bold cart-total">350 ج.م</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5>سرَّاء</h5>
+                    <p>منصة متخصصة في بيع منتجات التجميل والعناية بالبشرة والشعر من أفضل الماركات المحلية والعالمية.</p>
+                    <div class="social-icons d-flex gap-2 mt-3">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5>روابط سريعة</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="products.html">المنتجات</a></li>
+                        <li><a href="categories.html">الفئات</a></li>
+                        <li><a href="about.html">من نحن</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>تواصل معنا</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-map-marker-alt me-2"></i> القاهرة، مصر</li>
+                        <li><i class="fas fa-phone me-2"></i> +20 123 456 7890</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@sarraa.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <p class="mb-0">&copy; 2025 سرَّاء لمستحضرات التجميل. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script>
+        // Show/hide credit card details based on payment method selection
+        document.addEventListener('DOMContentLoaded', function() {
+            const cashRadio = document.getElementById('cash-on-delivery');
+            const cardRadio = document.getElementById('credit-card');
+            const cardDetails = document.getElementById('card-details');
+            
+            cashRadio.addEventListener('change', function() {
+                if (this.checked) {
+                    cardDetails.classList.add('d-none');
+                }
+            });
+            
+            cardRadio.addEventListener('change', function() {
+                }
+            });
+        }
+    </script>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/checkout.js"></script>
+    <script src="js/global-settings.js"></script> <!-- Load global settings -->

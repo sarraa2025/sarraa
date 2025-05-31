@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة المنتجات - لوحة التحكم - سرَّاء للتجميل والعناية</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <script>
+        // Admin Access Control
+        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        if (!currentUser || !currentUser.isAdmin) {
+            alert("غير مصرح لك بالوصول إلى هذه الصفحة. يرجى تسجيل الدخول كمسؤول.");
+            window.location.href = "login.html";
+        }
+    </script>
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <img src="images/logo.png" alt="سرَّاء" class="logo">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">الرئيسية</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="categories.html">الفئات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="products.html">المنتجات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">من نحن</a>
+                        </li>
+                         <!-- Admin link is added dynamically by auth.js -->
+                    </ul>
+                     <div class="d-flex align-items-center">
+                        <div class="cart-icon position-relative me-3">
+                            <a href="cart.html" class="text-decoration-none text-dark">
+                                <i class="fas fa-shopping-cart fs-5"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary cart-count" style="font-size: 0.7em;">0</span>
+                            </a>
+                        </div>
+                        <div class="auth-links">
+                             <!-- Auth links populated by auth.js -->
+                             <a href="login.html" class="btn btn-outline-primary me-2">تسجيل الدخول</a>
+                             <a href="register.html" class="btn btn-primary">إنشاء حساب</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Admin Products Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <!-- Admin Sidebar -->
+                <div class="col-lg-3 mb-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="mb-4">لوحة التحكم</h5>
+                            
+                            <div class="admin-nav">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="admin-dashboard.html">
+                                            <i class="fas fa-tachometer-alt me-2"></i> الرئيسية
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="admin-products.html">
+                                            <i class="fas fa-box me-2"></i> المنتجات
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="admin-categories.html">
+                                            <i class="fas fa-tags me-2"></i> الفئات
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="admin-orders.html">
+                                            <i class="fas fa-shopping-bag me-2"></i> الطلبات
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="admin-users.html">
+                                            <i class="fas fa-users me-2"></i> المستخدمين
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="admin-settings.html">
+                                            <i class="fas fa-cog me-2"></i> الإعدادات
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Products Content -->
+                <div class="col-lg-9">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h4 class="mb-0">إدارة المنتجات</h4>
+                                <div>
+                                    <button id="import-products" class="btn btn-outline-primary me-2">
+                                        <i class="fas fa-cloud-download-alt me-1"></i> استيراد من API
+                                    </button>
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
+                                        <i class="fas fa-plus me-1"></i> إضافة منتج
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Products Filter -->
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" id="search-product" placeholder="بحث عن منتج...">
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-select" id="filter-category">
+                                        <option value="">جميع الفئات</option>
+                                        <!-- Categories will be inserted here -->
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-select" id="sort-products">
+                                        <option value="name-asc">الاسم (أ-ي)</option>
+                                        <option value="name-desc">الاسم (ي-أ)</option>
+                                        <option value="price-asc">السعر (الأقل أولاً)</option>
+                                        <option value="price-desc">السعر (الأعلى أولاً)</option>
+                                        <option value="stock-asc">المخزون (الأقل أولاً)</option>
+                                        <option value="stock-desc">المخزون (الأعلى أولاً)</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="btn btn-primary w-100" id="apply-filters">تطبيق</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Products Table -->
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>الصورة</th>
+                                            <th>الاسم</th>
+                                            <th>الفئة</th>
+                                            <th>السعر</th>
+                                            <th>المخزون</th>
+                                            <th>الإجراءات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="products-list">
+                                        <!-- Products will be inserted here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <!-- Pagination -->
+                            <nav aria-label="Page navigation" class="mt-4">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">السابق</a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">التالي</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add Product Modal -->
+    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addProductModalLabel">إضافة منتج جديد</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="add-product-form">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="product-name" class="form-label">اسم المنتج</label>
+                                <input type="text" class="form-control" id="product-name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="product-category" class="form-label">الفئة</label>
+                                <select class="form-select" id="product-category" required>
+                                    <!-- Categories will be inserted here -->
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="product-price" class="form-label">السعر</label>
+                                <input type="number" class="form-control" id="product-price" min="0" step="0.01" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="product-old-price" class="form-label">السعر القديم (اختياري)</label>
+                                <input type="number" class="form-control" id="product-old-price" min="0" step="0.01">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="product-stock" class="form-label">المخزون</label>
+                                <input type="number" class="form-control" id="product-stock" min="0" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="product-brand" class="form-label">الماركة</label>
+                                <input type="text" class="form-control" id="product-brand" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="product-image" class="form-label">رابط الصورة</label>
+                                <input type="text" class="form-control" id="product-image" placeholder="https://example.com/image.jpg">
+                            </div>
+                            <div class="col-12">
+                                <label for="product-description" class="form-label">الوصف</label>
+                                <textarea class="form-control" id="product-description" rows="3" required></textarea>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="product-featured">
+                                    <label class="form-check-label" for="product-featured">
+                                        منتج مميز
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="button" class="btn btn-primary" id="save-product">حفظ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Product Modal -->
+    <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProductModalLabel">تعديل المنتج</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="edit-product-form">
+                        <input type="hidden" id="edit-product-id">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="edit-product-name" class="form-label">اسم المنتج</label>
+                                <input type="text" class="form-control" id="edit-product-name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="edit-product-category" class="form-label">الفئة</label>
+                                <select class="form-select" id="edit-product-category" required>
+                                    <!-- Categories will be inserted here -->
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="edit-product-price" class="form-label">السعر</label>
+                                <input type="number" class="form-control" id="edit-product-price" min="0" step="0.01" required>
+                            </div>
+                             <div class="col-md-6">
+                                <label for="edit-product-old-price" class="form-label">السعر القديم (اختياري)</label>
+                                <input type="number" class="form-control" id="edit-product-old-price" min="0" step="0.01">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="edit-product-stock" class="form-label">المخزون</label>
+                                <input type="number" class="form-control" id="edit-product-stock" min="0" required>
+                            </div>
+                             <div class="col-md-6">
+                                <label for="edit-product-brand" class="form-label">الماركة</label>
+                                <input type="text" class="form-control" id="edit-product-brand" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="edit-product-image" class="form-label">رابط الصورة</label>
+                                <input type="text" class="form-control" id="edit-product-image">
+                            </div>
+                            <div class="col-12">
+                                <label for="edit-product-description" class="form-label">الوصف</label>
+                                <textarea class="form-control" id="edit-product-description" rows="3" required></textarea>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="edit-product-featured">
+                                    <label class="form-check-label" for="edit-product-featured">
+                                        منتج مميز
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="button" class="btn btn-primary" id="update-product">تحديث</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer py-5 mt-5 bg-light">
+         <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5>سرَّاء</h5>
+                    <p>منصة متخصصة في بيع منتجات التجميل والعناية بالبشرة والشعر من أفضل الماركات المحلية والعالمية.</p>
+                    <div class="social-icons d-flex gap-2 mt-3">
+                        <a href="#" class="text-secondary"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-secondary"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-secondary"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5>روابط سريعة</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-decoration-none text-dark">الرئيسية</a></li>
+                        <li><a href="products.html" class="text-decoration-none text-dark">المنتجات</a></li>
+                        <li><a href="categories.html" class="text-decoration-none text-dark">الفئات</a></li>
+                        <li><a href="about.html" class="text-decoration-none text-dark">من نحن</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>تواصل معنا</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-map-marker-alt me-2"></i> القاهرة، مصر</li>
+                        <li><i class="fas fa-phone me-2"></i> +20 123 456 7890</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@sarraa.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center mt-4 border-top pt-4">
+                <p class="mb-0 text-muted">&copy; 2025 سرَّاء لمستحضرات التجميل. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth.js"></script> <!-- Needed for updateNavigation -->
+    <script src="js/cart.js"></script> <!-- Needed for updateCartCount -->
+    <script src="js/admin-products.js"></script> <!-- Specific admin products logic -->
+    <script>
+        // Update cart count and navigation on load
+        document.addEventListener("DOMContentLoaded", function() {
+             if (typeof updateCartCount === "function") {
+                updateCartCount();
+            }
+            if (typeof updateNavigation === "function") {
+                const user = JSON.parse(localStorage.getItem("currentUser"));
+                updateNavigation(user);
+            }
+            // Load products (assuming admin-products.js handles this)
+             if (typeof loadAdminProducts === "function") {
+                 loadAdminProducts();
+             }
+        });
+    </script>
+    <script src="js/global-settings.js"></script>
+<script src="js/console_error_fix.js"></script>
+<script src="js/image_fix.js"></script>
+</body>
+</html>
+

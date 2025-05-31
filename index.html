@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سرَّاء - متجر مستحضرات التجميل والعناية</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <img src="images/logo.png" alt="سرَّاء" class="logo">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="index.html">الرئيسية</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="categories.html">الفئات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="products.html">المنتجات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">من نحن</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <div class="cart-icon position-relative me-3">
+                            <a href="cart.html">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary cart-count">0</span>
+                            </a>
+                        </div>
+                        <div class="auth-links">
+                            <a href="login.html" class="btn btn-outline-primary me-2">تسجيل الدخول</a>
+                            <a href="register.html" class="btn btn-primary">إنشاء حساب</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 order-md-2">
+                    <img src="images/hero-image.jpg" alt="منتجات سرَّاء" class="img-fluid rounded hero-image">
+                </div>
+                <div class="col-md-6 order-md-1 mt-4 mt-md-0">
+                    <h1 class="display-4 mb-3">سرَّاء</h1>
+                    <h2 class="h3 mb-4">لمستحضرات التجميل والعناية</h2>
+                    <p class="lead mb-4">اكتشفي مجموعتنا المميزة من منتجات العناية بالبشرة والشعر والجسم من أفضل الماركات المحلية والعالمية</p>
+                    <a href="products.html" class="btn btn-primary btn-lg">تسوقي الآن</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="py-5 categories-section">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">فئات المنتجات</h2>
+            <!-- Swiper -->
+            <div class="swiper categories-swiper">
+                <div class="swiper-wrapper" id="homepage-categories-container">
+                    <!-- Categories will be loaded here as swiper-slide -->
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+                <!-- Add Navigation -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="py-5 bg-light featured-products-section">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">منتجات مميزة</h2>
+            <!-- Swiper -->
+            <div class="swiper featured-products-swiper">
+                <div class="swiper-wrapper" id="featured-products-container">
+                    <!-- Featured products will be loaded here as swiper-slide -->
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+                <!-- Add Navigation -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <img src="images/about-image.jpg" alt="قصة سرَّاء" class="img-fluid rounded">
+                </div>
+                <div class="col-md-6 mt-4 mt-md-0">
+                    <h2 class="section-title mb-4">رؤيتنا</h2>
+                    <p>الجمال المتفرد هو شغفنا. نجرّب المنتجات قبل عرضها، لأن الصدق قبل التسويق.
+نختار الجودة التي تفرق في بشرتك وجسمك، من خلال تجارب كتير،  تقييمات، ووعي تجميلي صادق. منتجات بتتقدملك بحُب، ومن قلب حقيقي مهتم.</p>
+                    <p>هدفنا نتيح لشركائنا تجربة تسوق صادقة، ومميزة، ليتواصلوا مع جمالهم الطبيعي بثقة، من خلال منتجات فعالة تعكس اهتمام عميق بالبشرة.</p>
+                    <p>رسالتنا هي تمكينك من اختيار الأفضل لبشرتك وجسمك، وتجربة عالم الجمال بعين محبة، وواعية.</p>
+
+                    <a href="about.html" class="btn btn-outline-primary">اقرأي المزيد عن رحلتنا</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5>سرَّاء</h5>
+                    <p>منصة متخصصة في بيع منتجات التجميل والعناية بالبشرة والشعر من أفضل الماركات المحلية والعالمية.</p>
+                    <div class="social-icons d-flex gap-2 mt-3">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5>روابط سريعة</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="products.html">المنتجات</a></li>
+                        <li><a href="categories.html">الفئات</a></li>
+                        <li><a href="about.html">من نحن</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>تواصل معنا</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-map-marker-alt me-2"></i> القاهرة، مصر</li>
+                        <li><i class="fas fa-phone me-2"></i> +20 123 456 7890</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@sarraa.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <p class="mb-0">&copy; 2025 سرَّاء لمستحضرات التجميل. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="js/localStorage_cleaner.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/homepage.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/global-settings.js"></script>
+<script src="js/console_error_fix.js"></script>
+<script src="js/image_fix.js"></script>
+</body>
+</html>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الإعدادات - لوحة التحكم - سرَّاء للتجميل والعناية</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <script>
+        // Admin Access Control
+        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        if (!currentUser || !currentUser.isAdmin) {
+            alert("غير مصرح لك بالوصول إلى هذه الصفحة. يرجى تسجيل الدخول كمسؤول.");
+            window.location.href = "login.html";
+        }
+    </script>
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <img src="images/logo.png" alt="سرَّاء" class="logo">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">الرئيسية</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="categories.html">الفئات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="products.html">المنتجات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">من نحن</a>
+                        </li>
+                         <!-- Admin link is added dynamically by auth.js -->
+                    </ul>
+                     <div class="d-flex align-items-center">
+                        <div class="cart-icon position-relative me-3">
+                            <a href="cart.html" class="text-decoration-none text-dark">
+                                <i class="fas fa-shopping-cart fs-5"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary cart-count" style="font-size: 0.7em;">0</span>
+                            </a>
+                        </div>
+                        <div class="auth-links">
+                             <!-- Auth links populated by auth.js -->
+                             <a href="login.html" class="btn btn-outline-primary me-2">تسجيل الدخول</a>
+                             <a href="register.html" class="btn btn-primary">إنشاء حساب</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Admin Settings Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <!-- Admin Sidebar -->
+                <div class="col-lg-3 mb-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="mb-4">لوحة التحكم</h5>
+                            
+                            <div class="admin-nav">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="admin-dashboard.html">
+                                            <i class="fas fa-tachometer-alt me-2"></i> الرئيسية
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="admin-products.html">
+                                            <i class="fas fa-box me-2"></i> المنتجات
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="admin-categories.html">
+                                            <i class="fas fa-tags me-2"></i> الفئات
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="admin-orders.html">
+                                            <i class="fas fa-shopping-bag me-2"></i> الطلبات
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="admin-users.html">
+                                            <i class="fas fa-users me-2"></i> المستخدمين
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="admin-settings.html">
+                                            <i class="fas fa-cog me-2"></i> الإعدادات
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Settings Content -->
+                <div class="col-lg-9">
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body p-4">
+                            <h5 class="mb-4">إعدادات المتجر</h5>
+                            
+                            <form id="store-settings-form">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="store-name" class="form-label">اسم المتجر</label>
+                                        <input type="text" class="form-control" id="store-name" value="سرَّاء للتجميل والعناية" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="store-email" class="form-label">البريد الإلكتروني</label>
+                                        <input type="email" class="form-control" id="store-email" value="info@sarraa.com" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="store-phone" class="form-label">رقم الهاتف</label>
+                                        <input type="tel" class="form-control" id="store-phone" value="+20 123 456 7890" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="store-currency" class="form-label">العملة</label>
+                                        <select class="form-select" id="store-currency" required>
+                                            <option value="EGP" selected>جنيه مصري (ج.م)</option>
+                                            <option value="USD">دولار أمريكي ($)</option>
+                                            <option value="SAR">ريال سعودي (ر.س)</option>
+                                            <option value="AED">درهم إماراتي (د.إ)</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="store-address" class="form-label">عنوان المتجر</label>
+                                        <input type="text" class="form-control" id="store-address" value="القاهرة، مصر" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="store-description" class="form-label">وصف المتجر</label>
+                                        <textarea class="form-control" id="store-description" rows="3" required>منصة متخصصة في بيع منتجات التجميل والعناية بالبشرة والشعر من أفضل الماركات المحلية والعالمية.</textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary">حفظ الإعدادات</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body p-4">
+                            <h5 class="mb-4">إعدادات الشحن</h5>
+                            
+                            <form id="shipping-settings-form">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="shipping-cost" class="form-label">تكلفة الشحن الافتراضية</label>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control" id="shipping-cost" value="50" min="0" step="0.01" required>
+                                            <span class="input-group-text">ج.م</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="free-shipping-threshold" class="form-label">الحد الأدنى للشحن المجاني</label>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control" id="free-shipping-threshold" value="500" min="0" step="0.01" required>
+                                            <span class="input-group-text">ج.م</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="enable-free-shipping" checked>
+                                            <label class="form-check-label" for="enable-free-shipping">
+                                                تفعيل الشحن المجاني للطلبات التي تتجاوز الحد الأدنى
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary">حفظ الإعدادات</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body p-4">
+                            <h5 class="mb-4">إعدادات الدفع</h5>
+                            
+                            <form id="payment-settings-form">
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" id="enable-cod" checked>
+                                            <label class="form-check-label" for="enable-cod">
+                                                تفعيل الدفع عند الاستلام
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" id="enable-card-payment" checked>
+                                            <label class="form-check-label" for="enable-card-payment">
+                                                تفعيل الدفع ببطاقة الائتمان
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 card-payment-settings">
+                                        <div class="card bg-light">
+                                            <div class="card-body">
+                                                <h6 class="mb-3">إعدادات بوابة الدفع</h6>
+                                                <div class="mb-3">
+                                                    <label for="payment-api-key" class="form-label">مفتاح API</label>
+                                                    <input type="text" class="form-control" id="payment-api-key" value="sk_test_example_key" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="payment-secret-key" class="form-label">المفتاح السري</label>
+                                                    <input type="password" class="form-control" id="payment-secret-key" value="••••••••••••••••" required>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="payment-test-mode" checked>
+                                                    <label class="form-check-label" for="payment-test-mode">
+                                                        وضع الاختبار
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary">حفظ الإعدادات</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <h5 class="mb-4">إعدادات التواصل الاجتماعي</h5>
+                            
+                            <form id="social-settings-form">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="facebook-url" class="form-label">رابط فيسبوك</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fab fa-facebook-f"></i></span>
+                                            <input type="url" class="form-control" id="facebook-url" value="https://facebook.com/sarraa">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="instagram-url" class="form-label">رابط انستجرام</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fab fa-instagram"></i></span>
+                                            <input type="url" class="form-control" id="instagram-url" value="https://instagram.com/sarraa">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="twitter-url" class="form-label">رابط تويتر</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fab fa-twitter"></i></span>
+                                            <input type="url" class="form-control" id="twitter-url" value="https://twitter.com/sarraa">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="whatsapp-number" class="form-label">رقم واتساب</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fab fa-whatsapp"></i></span>
+                                            <input type="tel" class="form-control" id="whatsapp-number" value="+201234567890">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary">حفظ الإعدادات</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-5 mt-5 bg-light">
+         <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5>سرَّاء</h5>
+                    <p>منصة متخصصة في بيع منتجات التجميل والعناية بالبشرة والشعر من أفضل الماركات المحلية والعالمية.</p>
+                    <div class="social-icons d-flex gap-2 mt-3">
+                        <a href="#" class="text-secondary"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-secondary"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-secondary"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5>روابط سريعة</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-decoration-none text-dark">الرئيسية</a></li>
+                        <li><a href="products.html" class="text-decoration-none text-dark">المنتجات</a></li>
+                        <li><a href="categories.html" class="text-decoration-none text-dark">الفئات</a></li>
+                        <li><a href="about.html" class="text-decoration-none text-dark">من نحن</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>تواصل معنا</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-map-marker-alt me-2"></i> القاهرة، مصر</li>
+                        <li><i class="fas fa-phone me-2"></i> +20 123 456 7890</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@sarraa.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center mt-4 border-top pt-4">
+                <p class="mb-0 text-muted">&copy; 2025 سرَّاء لمستحضرات التجميل. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script> <!-- Include cart.js for header cart count -->
+    <script src="js/admin-settings.js"></script> <!-- Include the new settings script -->
+<script src="js/console_error_fix.js"></script>
+<script src="js/image_fix.js"></script>
+</body>
+</html>Count -->
+    <script src="js/admin-settings.js"></script> <!-- Specific admin settings logic -->
+    <script>
+        // Update cart count and navigation on load
+        document.addEventListener("DOMContentLoaded", function() {
+             if (typeof updateCartCount === "function") {
+                updateCartCount();
+            }
+            if (typeof updateNavigation === "function") {
+                const user = JSON.parse(localStorage.getItem("currentUser"));
+                updateNavigation(user);
+            }
+            // Load settings (assuming admin-settings.js handles this)
+             if (typeof loadAdminSettings === "function") {
+                 loadAdminSettings();
+             }
+        });
+    </script>
+    <script src="js/global-settings.js"></script>
+<script src="js/console_error_fix.js"></script>
+<script src="js/image_fix.js"></script>
+</body>
+</html>
+

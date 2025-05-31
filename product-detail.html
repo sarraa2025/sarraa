@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل المنتج - سرَّاء للتجميل والعناية</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <img src="images/logo.png" alt="سرَّاء" class="logo">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">الرئيسية</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="categories.html">الفئات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="products.html">المنتجات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">من نحن</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <div class="cart-icon position-relative me-3">
+                            <a href="cart.html">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary cart-count">0</span>
+                            </a>
+                        </div>
+                        <div class="auth-links">
+                            <a href="login.html" class="btn btn-outline-primary me-2">تسجيل الدخول</a>
+                            <a href="register.html" class="btn btn-primary">إنشاء حساب</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Product Detail Section -->
+    <section class="py-5">
+        <div class="container" id="productDetailContainer">
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">الرئيسية</a></li>
+                    <li class="breadcrumb-item"><a href="products.html">المنتجات</a></li>
+                    <li class="breadcrumb-item active" aria-current="page" id="breadcrumbProductName">تفاصيل المنتج</li>
+                </ol>
+            </nav>
+            
+            <div class="row">
+                <!-- Product Images -->
+                <div class="col-md-6 mb-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-0">
+                            <div class="product-main-image mb-3">
+                                <img src="images/product-placeholder.jpg" alt="صورة المنتج" class="img-fluid rounded" id="productImage">
+                            </div>
+                            <div class="row g-2" id="productThumbnails">
+                                <!-- Thumbnails will be added dynamically if available -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product Info -->
+                <div class="col-md-6">
+                    <h1 class="mb-3" id="productTitle">اسم المنتج</h1>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex align-items-center">
+                            <div class="me-2" id="productRatingStars">
+                                <!-- Rating stars will be added dynamically -->
+                            </div>
+                            <span id="productReviewsCount">(0 تقييم)</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h3 class="text-primary mb-0" id="productPrice">0 ج.م</h3>
+                        <small class="text-muted">
+                            <del id="productOldPrice" style="display: none;">0 ج.م</del> 
+                            <span id="productDiscount" style="display: none;">(خصم 0%)</span>
+                        </small>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>الوصف:</h5>
+                        <p id="productDescription">وصف المنتج سيظهر هنا.</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>المميزات:</h5>
+                        <ul id="productFeaturesList">
+                            <!-- Features will be added dynamically -->
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>طريقة الاستخدام:</h5>
+                        <p id="productUsage">طريقة استخدام المنتج ستظهر هنا.</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="row align-items-center">
+                            <div class="col-md-4 mb-3 mb-md-0">
+                                <div class="input-group">
+                                    <button class="btn btn-outline-secondary decrease-qty" type="button" id="decreaseQty">-</button>
+                                    <input type="text" class="form-control text-center" id="productQuantity" value="1" readonly>
+                                    <button class="btn btn-outline-secondary increase-qty" type="button" id="increaseQty">+</button>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <button class="btn btn-primary w-100" id="addToCartBtn" data-id="">
+                                    <i class="fas fa-cart-plus me-2"></i> إضافة إلى السلة
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="d-flex align-items-center">
+                            <div class="me-4">
+                                <i class="fas fa-truck text-primary me-2"></i>
+                                <span>شحن سريع</span>
+                            </div>
+                            <div>
+                                <i class="fas fa-undo text-primary me-2"></i>
+                                <span>إرجاع مجاني خلال 14 يوم</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>مشاركة:</h5>
+                        <div class="social-icons d-flex gap-2">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-pinterest"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product Tabs -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <ul class="nav nav-tabs" id="productTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#details" type="button" role="tab" aria-controls="details" aria-selected="true">تفاصيل المنتج</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews" aria-selected="false">التقييمات (<span id="reviewsTabCount">0</span>)</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="shipping-tab" data-bs-toggle="tab" data-bs-target="#shipping" type="button" role="tab" aria-controls="shipping" aria-selected="false">الشحن والإرجاع</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content p-4 border border-top-0 rounded-bottom" id="productTabsContent">
+                        <div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="details-tab">
+                            <h4>معلومات المنتج</h4>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th style="width: 30%">الماركة</th>
+                                        <td id="productBrand">-</td>
+                                    </tr>
+                                    <tr>
+                                        <th>الوزن</th>
+                                        <td id="productWeight">-</td>
+                                    </tr>
+                                    <tr>
+                                        <th>المكونات</th>
+                                        <td id="productIngredients">-</td>
+                                    </tr>
+                                    <tr>
+                                        <th>بلد المنشأ</th>
+                                        <td id="productOrigin">مصر</td>
+                                    </tr>
+                                    <tr>
+                                        <th>تاريخ الصلاحية</th>
+                                        <td id="productExpiry">24 شهر من تاريخ الإنتاج</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+                            <h4>تقييمات العملاء</h4>
+                            <div class="mb-4">
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="me-2" id="reviewsAverageStars">
+                                        <!-- Average rating stars will be added dynamically -->
+                                    </div>
+                                    <span class="fw-bold" id="reviewsAverage">0 من 5</span>
+                                </div>
+                                <p id="reviewsCount">بناءً على 0 تقييم</p>
+                            </div>
+                            
+                            <div id="reviewsList">
+                                <!-- Reviews will be added dynamically -->
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="shipping" role="tabpanel" aria-labelledby="shipping-tab">
+                            <h4>سياسة الشحن</h4>
+                            <p>نوفر خدمة الشحن لجميع محافظات مصر. يتم شحن الطلبات خلال 1-3 أيام عمل من تاريخ تأكيد الطلب.</p>
+                            <p>رسوم الشحن:</p>
+                            <ul>
+                                <li>القاهرة والجيزة: 50 جنيه</li>
+                                <li>باقي المحافظات: 75 جنيه</li>
+                            </ul>
+                            
+                            <h4 class="mt-4">سياسة الإرجاع</h4>
+                            <p>يمكنك إرجاع المنتج خلال 14 يوم من تاريخ الاستلام في الحالات التالية:</p>
+                            <ul>
+                                <li>وصول المنتج تالفاً</li>
+                                <li>وصول منتج مختلف عما تم طلبه</li>
+                                <li>عدم مطابقة المنتج للمواصفات المذكورة</li>
+                            </ul>
+                            <p>يجب أن يكون المنتج في عبوته الأصلية وغير مستخدم لقبول الإرجاع.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Featured Products -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <h3 class="section-title">منتجات مميزة</h3>
+                </div>
+                <div class="col-12">
+                    <div class="row" id="featuredProductsContainer">
+                        <!-- Featured products will be added dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5>سرَّاء</h5>
+                    <p>منصة متخصصة في بيع منتجات التجميل والعناية بالبشرة والشعر من أفضل الماركات المحلية والعالمية.</p>
+                    <div class="social-icons d-flex gap-2 mt-3">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5>روابط سريعة</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="products.html">المنتجات</a></li>
+                        <li><a href="categories.html">الفئات</a></li>
+                        <li><a href="about.html">من نحن</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>تواصل معنا</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-map-marker-alt me-2"></i> القاهرة، مصر</li>
+                        <li><i class="fas fa-phone me-2"></i> +20 123 456 7890</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@sarraa.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <p class="mb-0">&copy; 2025 سرَّاء لمستحضرات التجميل. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/localStorage_cleaner.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/product.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/global-settings.js"></script>
+<script src="js/console_error_fix.js"></script>
+<script src="js/image_fix.js"></script>
+</body>
+</html>
